@@ -15,7 +15,9 @@ const ListBooks = () => {
     getBooks();
   }, []);
 
-  const handleShelfChange = (book, shelf) => {
+  const handleShelfChange = async (book, shelf) => {
+    await BooksAPI.update(book, shelf);
+
     setBooks(books.map((b) => (b.id === book.id ? { ...b, shelf } : b)));
   };
 

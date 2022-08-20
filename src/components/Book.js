@@ -1,10 +1,7 @@
 import React from "react";
-import * as BooksAPI from "../utils/BooksAPI";
 
 const Book = ({ book, onChangeShelf }) => {
-  const changeShelf = async (e) => {
-    await BooksAPI.update(book, e.target.value);
-
+  const changeShelf = (e) => {
     if (onChangeShelf) onChangeShelf(book, e.target.value);
   };
 
@@ -20,10 +17,11 @@ const Book = ({ book, onChangeShelf }) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select onChange={changeShelf} defaultValue={book.shelf}>
-            <option value="none" disabled>
-              Move to...
-            </option>
+          <select
+            onChange={changeShelf}
+            defaultValue={!!book.shelf ? book.shelf : "none"}
+          >
+            <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
