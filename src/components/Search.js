@@ -21,9 +21,11 @@ const Search = () => {
     const getBooks = async () => {
       try {
         const response = await BooksAPI.search(query, 15);
-        const updatedBooks = response.map(
-          (book) => myBooks.find((b) => book.id === b.id) || book
-        );
+        const updatedBooks = response.length
+          ? response.map(
+              (book) => myBooks.find((b) => book.id === b.id) || book
+            )
+          : [];
 
         setBooks(
           updatedBooks.filter(
