@@ -21,8 +21,16 @@ const Search = () => {
     const getBooks = async () => {
       try {
         const response = await BooksAPI.search(query, 15);
+        const updatedBooks = response.map(
+          (book) => myBooks.find((b) => book.id === b.id) || book
+        );
+
         setBooks(
-          response.map((book) => myBooks.find((b) => book.id === b.id) || book)
+          updatedBooks.filter(
+            (book) =>
+              Object.hasOwn(book, "imageLinks") &&
+              Object.hasOwn(book, "authors")
+          )
         );
       } catch (err) {
         console.log(err);
@@ -36,6 +44,7 @@ const Search = () => {
 
     return () => {
       clearTimeout(timeoutID);
+      setBooks([]);
     };
   }, [query]);
 
